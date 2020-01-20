@@ -1,12 +1,8 @@
 ﻿using System;
 
-namespace CoffeeDistributor
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
+namespace CoffeeDistributor {
+    class Program {
+        static void Main(string[] args) {
         }
     }
 }
