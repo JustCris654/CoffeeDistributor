@@ -57,6 +57,7 @@ namespace CoffeeDistributor {
         }
 
         public bool SupplyCoffee(int sugarCubes) {
+            if (sugarCubes < 0 || sugarCubes > 2) return false;
             if (_sugarCubes < sugarCubes) return false;
             if (!SupplyCoffee()) return false;
             _sugarCubes -= sugarCubes - 1;
