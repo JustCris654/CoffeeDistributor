@@ -13,6 +13,8 @@ namespace CoffeeDistributor {
         private string _psw;
         private bool   _outOfOrder;
         private int[]  _supplied;
+        public readonly double _cost = 0.30f;        //costo the e caffe
+        public readonly double _waterCost = 0.15f;   //costo acqua
 
         public Distributor(int coffeeCapsules, int theCapsules, int cups, int sugarCubes, string psw) {
             _supplied            = new[] {0, 0, 0};
@@ -46,7 +48,8 @@ namespace CoffeeDistributor {
             return _sugarCubes > 0;
         }
 
-        public bool SupplyCoffee() {
+        public bool SupplyCoffee(Key key) {
+            if (key.buyDrink(_cost)) return false;
             if (!IsCoffeeAvaible() || !IsSugarAvaible() || !IsCupsAvaible()) return false;
             _sugarCubes--;
             _cups--;
@@ -56,15 +59,16 @@ namespace CoffeeDistributor {
             return true;
         }
 
-        public bool SupplyCoffee(int sugarCubes) {
+        public bool SupplyCoffee(Key key,  int sugarCubes) {
             if (sugarCubes < 0 || sugarCubes > 2) return false;
             if (_sugarCubes < sugarCubes) return false;
-            if (!SupplyCoffee()) return false;
+            if (!SupplyCoffee(key)) return false;
             _sugarCubes -= sugarCubes - 1;
             return true;
         }
 
-        public bool SupplyThe() {
+        public bool SupplyThe(Key key) {
+            if (key.buyDrink(_cost)) return false;
             if (!IsTheAvaible() || !IsSugarAvaible() || !IsCupsAvaible()) return false;
             _sugarCubes--;
             _cups--;
@@ -74,14 +78,15 @@ namespace CoffeeDistributor {
             return true;
         }
 
-        public bool SupplyThe(int sugarCubes) {
+        public bool SupplyThe(Key key, int sugarCubes) {
             if (_sugarCubes < sugarCubes) return false;
-            if (!SupplyThe()) return false;
+            if (!SupplyThe(key)) return false;
             _sugarCubes -= sugarCubes - 1;
             return true;
         }
 
-        public bool SupplyWater() {
+        public bool SupplyWater(Key key) {
+            if (key.buyDrink(_waterCost)) return false;
             if (!IsCupsAvaible()) return false;
             _cups--;
             _supplied[2]++;
